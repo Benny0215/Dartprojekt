@@ -16,7 +16,7 @@
                 echo "Verbindung zur Datenbank konnte leider nicht aufgebaut werden!";
                 die();
              }
-             }
+      }
       function isUserLoggedIn()
       {
           $stmt= self::$_db->prepare("SELECT User_ID FROM users WHERE Session=:sid");
@@ -55,7 +55,7 @@
             {
               return false;
             }
-    }
+      }
 
     function logout()
       {
@@ -64,6 +64,33 @@
         $stmt->bindParam(":sid", $sid);
         $stmt->execute();
       }
+    function isUserRegistrated($_benutzer)
+    {
+      $stmt=self::$_db->prepare("SELECT benutzer FROM users WHERE benutzer=:benutzer");
+      $stmt->bindParam(":benutzer",$_benutzer);
+      $stmt->execute();
 
+      if($stmt->rowCount()===1)
+        {
+          return true;
+        }
+      else
+        {
+          return false;
+        }
+    }
+    function Registrieren($_benutzer, $_pw1)
+      {
+        $stmt=self::$_db->prepare("INSERT INTO users (benutzer, Password) VALUES (:benutzer, :Password)");
+        $result=$stmt->execute(array('benutzer'=>$_benutzer, 'Password'=>$_pw1));
+        if($result)
+          {
+            echo 'Du wurdest erfolgreich registriert. <a href="index.php?section=login">Zum Login</a>';
+          }
+        else
+          {
+            echo 'Beim Abspeichern ist leider ein Fehler aufgetreten<br>';
+          }
+      }
   }
  ?>

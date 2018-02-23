@@ -11,7 +11,7 @@
     if(isset($_POST['einloggen']))
       {
         $benutzer=$_POST['benutzer'];
-        $passwort=($_POST['passwort']);
+        $passwort=SHA1(($_POST['passwort']));
 
         if($db->login($benutzer, $passwort)===TRUE)
           {
@@ -19,37 +19,40 @@
           }
         else
           {
-            echo "Einloggen fehlgeschlagen!";
+            echo "Einloggen fehlgeschlagen! Versuche es erneut!";
           }
       }
- ?>
+    else
+    {
+  ?>
+              <form action="index.php?section=login" method="POST">
+                <table>
+                  <tr>
+                    <td>
+                        Benutzername:
+                    </td>
+                    <td>
+                        <input type="text" name="benutzer" required />
+                    </td>
 
-<form action="index.php?section=login" method="POST">
-  <table>
-    <tr>
-      <td>
-          Benutzer:
-      </td>
-      <td>
-          <input type="text" name="benutzer" required />
-      </td>
+                  </tr>
+                  <tr>
+                    <td>
+                        Passwort:
+                    </td>
+                    <td>
+                        <input type="password" name="passwort" required />
+                    </td>
+                    <tr>
+                    <td>
+                        <input type="submit" name="einloggen" value="Einloggen"  />
+                    </td>
+                    </tr>
+                  </tr>
+                </table>
+              </form>
+              <?php
+                    }
 
-    </tr>
-    <tr>
-      <td>
-          Passwort:
-      </td>
-      <td>
-          <input type="password" name="passwort" required />
-      </td>
-      <tr>
-      <td>
-          <input type="submit" name="einloggen" value="Einloggen"  />
-      </td>
-      </tr>
-    </tr>
-  </table>
-</form>
-<?php
-  }
-?>
+                }
+              ?>
