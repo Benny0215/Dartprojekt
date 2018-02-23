@@ -1,5 +1,28 @@
 <?php
 session_start();
+require_once 'php/mysql.php';
+$db= new DB();
+
+// Auto Logout //
+if ($db->isUserLoggedIn()===true)
+  {
+      if(isset($_SESSION["timestamp"]))
+        {
+        if(time() - $_SESSION["timestamp"] >600)  //subtract new timestamp from the old one
+        {
+          echo"<script>alert('10 Minutes inaktiv -- Timeout!');</script>";
+          unset($_SESSION["timestamp"]);
+          $db->logout();
+        }
+        }
+        else
+        {
+          $_SESSION['timestamp']= time(); //set new timestamp
+        }
+
+}
+////////////////
+
   if (isset($_GET["section"]))
   {
       $section=$_GET["section"];
@@ -8,8 +31,7 @@ session_start();
     $section="";
       }
 
-  require_once 'php/mysql.php';
-  $db= new DB();
+
  ?>
 
 

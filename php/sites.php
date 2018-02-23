@@ -1,19 +1,54 @@
 <?php
   switch ($section) {
     case 'login':
-                include("php/login.php");
+                if($db->isUserLoggedIn()=== True)
+                {
+                  include("php/startseite.php");
+                }
+                else
+                {
+                  include("php/login.php");
+                }
           break;
     case 'logout':
-                include("php/logout.php");
+                if($db->isUserLoggedIn()=== TRUE)
+                {
+                  include("php/logout.php");
+                }
+                else
+                {
+                  include("php/startseite.php");
+                }
           break;
     case 'einrichten':
-                include("php/einrichten.php");
+                if($db->isUserLoggedIn()=== TRUE)
+                {
+                  include("php/einrichten.php");
+                }
+                else
+                {
+                  include("php/startseite.php");
+                }
           break;
     case 'start':
-                include("php/start.php");
+                if($db->isUserLoggedIn()=== TRUE)
+                {
+                  include("php/einrichten.php");
+                }
+                else
+                {
+                  include("php/startseite.php");
+                }
           break;
     case 'registrieren':
-                include("php/registrieren.php");
+                if($db->isUserLoggedIn()=== TRUE)
+                {
+                  include("php/registrieren.php");
+                }
+                else
+                {
+                  include("php/startseite.php");
+                }
           break;
     default:
                 include("php/startseite.php");

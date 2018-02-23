@@ -19,6 +19,7 @@
       }
       function isUserLoggedIn()
       {
+          
           $stmt= self::$_db->prepare("SELECT User_ID FROM users WHERE Session=:sid");
           $sid = session_id();
           $stmt->bindParam(":sid", $sid);
